@@ -18,6 +18,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <start-class>com.iquester.App</start-class>
+        <java.version>1.8</java.version>
     </properties>
 
     <dependencies>

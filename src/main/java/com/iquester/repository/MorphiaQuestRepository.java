@@ -10,7 +10,7 @@ public class MorphiaQuestRepository implements QuestRepository {
     @Autowired
     private MorphiaDataStoreProvider morphiaDataStoreProvider;
 
-    public Quest findQuest(String id) {
+    public Quest findOne(String id) {
         return morphiaDataStoreProvider.getDataStore().get(Quest.class, id);
     }
 }

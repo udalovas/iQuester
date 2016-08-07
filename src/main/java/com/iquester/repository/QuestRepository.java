@@ -4,5 +4,5 @@ import com.iquester.domain.model.Quest;
 
 public interface QuestRepository {
 
-    Quest findQuest(String id);
+    Quest findOne(String id);
 }
