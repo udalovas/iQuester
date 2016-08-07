@@ -4,6 +4,3 @@ target
 # IDEA
 *.iml
 .idea
-
-# Properties
-env.properties

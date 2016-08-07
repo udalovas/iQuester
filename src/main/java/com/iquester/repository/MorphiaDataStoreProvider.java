@@ -3,6 +3,7 @@ package com.iquester.repository;
 import com.iquester.domain.model.Quest;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 
@@ -29,11 +31,18 @@ public class MorphiaDataStoreProvider {
         Morphia morphia = new Morphia();
         morphia.mapPackage("com.iquester.dao.model");
 
-        datastore = morphia.createDatastore(
-                new MongoClient(
-                        environment.getProperty("mongodb.host"),
-                        environment.getProperty("mongodb.port", Integer.class)),
-                environment.getProperty("mongodb.db"));
+        final String mongoUri = environment.getProperty("mongodb.uri");
+        MongoClient mongoClient;
+        if(!StringUtils.isEmpty(mongoUri)) {
+            MongoClientURI mongoClientURI = new MongoClientURI(mongoUri);
+            datastore = morphia.createDatastore(
+                    new MongoClient(mongoClientURI), mongoClientURI.getDatabase());
+        } else {
+            mongoClient = new MongoClient(
+                    environment.getProperty("mongodb.host"),
+                    environment.getProperty("mongodb.port", Integer.class));
+            datastore = morphia.createDatastore(mongoClient, environment.getProperty("mongodb.db"));
+        }
         datastore.ensureIndexes();
 
         generateTestData();
