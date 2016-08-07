@@ -1,6 +1,4 @@
-# Maven
 target
-
-# IDEA
 *.iml
 .idea
+*.properties
