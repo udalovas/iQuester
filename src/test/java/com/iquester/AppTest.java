@@ -1,5 +1,6 @@
 package com.iquester;
 
+import com.iquester.domain.model.Quest;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -7,9 +8,13 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class AppTest 
-    extends TestCase
+public class AppTest extends TestCase
 {
+
+    public void change(int input) {
+        input = 0;
+    }
+
     /**
      * Create the test case
      *
@@ -34,5 +39,13 @@ public class AppTest
     public void testApp()
     {
         assertTrue( true );
+
+        int input = 1;
+        change(input);
+
+        assertEquals(1, input);
+
+        final Quest quest = new Quest("","");
+        quest.setId("1"); // I don't want it to be corrected!
     }
 }
